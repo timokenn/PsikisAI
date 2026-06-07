@@ -8,6 +8,7 @@ media sosial, ditenagai model **RoBERTa-base** yang sudah di-*fine-tune* (`rober
 
 ---
 
+## Untuk download model
 Link Google Drive: https://drive.google.com/drive/folders/1PDvmo2_aHBs7KSUy9ekULQ1_zSVO5NvS?usp=sharing
 
 ## 1. Struktur folder
