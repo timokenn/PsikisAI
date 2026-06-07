@@ -234,19 +234,8 @@ def predict_proba(texts):
 
 
 # Rendering helpers
-_META_LOWER = {k.lower(): v for k, v in CLASS_META.items()}
-
-def _meta(name: str) -> dict:
-    """Look up CLASS_META tolerantly (case-insensitive, strips spaces/underscores)."""
-    key = name.strip().replace("_", " ")
-    if key in CLASS_META:
-        return CLASS_META[key]
-    return _META_LOWER.get(key.lower(),
-           {"emoji": "🔍", "color": "#8A7B72",
-            "desc": "Language patterns detected in this text."})
-
 def render_result_card(name: str, conf: float) -> str:
-    m = _meta(name)
+    m = CLASS_META[name]
     return f"""
     <div class="result-card" style="--accent:{m['color']}">
       <div class="result-emoji">{m['emoji']}</div>
@@ -266,7 +255,7 @@ def render_prob_bars(probs, class_names, pred_idx) -> str:
     html = '<div class="prob-list">'
     for i in np.argsort(probs)[::-1]:
         name = class_names[i]
-        m = _meta(name)
+        m = CLASS_META.get(name, {"emoji": "•", "color": "#E0785A"})
         pct = probs[i] * 100
         pred_cls = "pred" if i == pred_idx else ""
         html += f"""
@@ -298,7 +287,7 @@ def render_lime(word_weights) -> str:
 
 
 def render_support_box(predicted: str) -> str:
-    if predicted.lower() == "suicidal":
+    if predicted == "Suicidal":
         lead = ("This text carries some heavy signals. If it reflects how you or someone close to you "
                 "feels right now, please know you are not alone. Someone is ready to listen, any time.")
     else:  # Depression
@@ -387,7 +376,7 @@ with tab_single:
     EXAMPLES = {
         "Choose an example": "",
         "Example: depression": "I haven't been able to get out of bed for weeks, everything just feels pointless and grey.",
-        "Example: anxious": "My chest feels tight, and every thought spirals into what could go wrong.",
+        "Example: anxious": "My chest feels tight and my heart won't stop pounding, I'm terrified something awful is about to happen.",
         "Example: stressed": "I'm so stressed and overwhelmed lately, the constant pressure at work is burning me out and I can't cope.",
         "Example: doing fine": "Had a great coffee with friends this morning, looking forward to the weekend trip!",
     }
@@ -432,7 +421,7 @@ with tab_single:
 
         st.markdown(render_result_card(pred_name, probs[pred_idx]), unsafe_allow_html=True)
 
-        if pred_name.lower() in ("suicidal", "depression"):
+        if pred_name in ("Suicidal", "Depression"):
             st.markdown(render_support_box(pred_name), unsafe_allow_html=True)
 
         st.markdown('<div class="card"><div class="section-kicker">Probability breakdown</div>',
