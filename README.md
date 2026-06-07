@@ -84,6 +84,25 @@ Browser otomatis terbuka di `http://localhost:8501`.
   notebook dilatih pada teks asli; pembersihan hanya dipakai untuk baseline TF-IDF.
 - Tokenizer: `truncation=True, max_length=128` (sama seperti saat training).
 - Ganti lokasi model lewat env var bila perlu: `PSIKISAI_MODEL_DIR=/path/ke/roberta_best`.
+- Jika label tidak muncul, periksa `roberta_best/config.json` dan pastikan:
+  ```
+  "id2label": {
+      "0": "Anxiety",
+      "1": "Bipolar",
+      "2": "Depression",
+      "3": "Normal",
+      "4": "Stress",
+      "5": "Suicidal"
+    },
+    "label2id": {
+      "Anxiety": 0,
+      "Bipolar": 1,
+      "Depression": 2,
+      "Normal": 3,
+      "Stress": 4,
+      "Suicidal": 5
+    },
+  ```
 
 ## Troubleshooting
 
