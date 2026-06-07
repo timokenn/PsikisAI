@@ -79,8 +79,7 @@ Browser otomatis terbuka di `http://localhost:8501`.
 
 ## Catatan teknis penting
 
-- **6 kelas** (bukan 5): `Anxiety, Bipolar, Depression, Normal, Stress, Suicidal`.
-  PTSD tidak ada di model — sesuaikan laporan tim agar konsisten dengan output app.
+- **6 kelas**: `Anxiety, Bipolar, Depression, Normal, Stress, Suicidal`.
 - **Teks mentah** langsung di-*tokenize* (tanpa `clean_text`), karena RoBERTa di
   notebook dilatih pada teks asli; pembersihan hanya dipakai untuk baseline TF-IDF.
 - Tokenizer: `truncation=True, max_length=128` (sama seperti saat training).
